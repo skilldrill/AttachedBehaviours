@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttachedBehaviours", "AttachedBehaviours.csproj", "{77195416-6359-4E3C-9C0E-50DB68015AF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAttachedBehaviours", "TestAttachedBehaviours\TestAttachedBehaviours.csproj", "{0579EA3E-978A-4255-A640-4FB5B5B8A2D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77195416-6359-4E3C-9C0E-50DB68015AF2}.Debug|x86.ActiveCfg = Debug|x86
+		{77195416-6359-4E3C-9C0E-50DB68015AF2}.Debug|x86.Build.0 = Debug|x86
+		{77195416-6359-4E3C-9C0E-50DB68015AF2}.Release|x86.ActiveCfg = Release|x86
+		{77195416-6359-4E3C-9C0E-50DB68015AF2}.Release|x86.Build.0 = Release|x86
+		{0579EA3E-978A-4255-A640-4FB5B5B8A2D3}.Debug|x86.ActiveCfg = Debug|x86
+		{0579EA3E-978A-4255-A640-4FB5B5B8A2D3}.Debug|x86.Build.0 = Debug|x86
+		{0579EA3E-978A-4255-A640-4FB5B5B8A2D3}.Release|x86.ActiveCfg = Release|x86
+		{0579EA3E-978A-4255-A640-4FB5B5B8A2D3}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
