@@ -1,5 +1,3 @@
 Watermark Behavior
 ==============
-
-WPF attached behaviours for controls:
--Watermark for textbox
+Watermark behavior for controls in WPF
