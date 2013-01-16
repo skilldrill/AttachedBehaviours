@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 
 namespace TestAttachedBehaviours
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -22,6 +24,44 @@ namespace TestAttachedBehaviours
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
+        }
+    }
+
+    public class MainViewModel : INotifyPropertyChanged
+    {
+        public MainViewModel()
+        {
+            comboSource = new List<string> { "a", "b" };
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        private List<string> comboSource;
+
+        public List<string> ComboSource
+        {
+            get
+            {
+                return this.comboSource;
+            }
+            set
+            {
+                if (this.comboSource != value)
+                {
+                    this.comboSource = value;
+                    this.OnPropertyChanged("ComboSource");
+                }
+            }
         }
     }
 }
