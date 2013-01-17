@@ -64,17 +64,17 @@
             </local:WatermarkBehavior.WatermarkUIElement>
         </ComboBox>
         <RichTextBox local:WatermarkBehavior.IsWatermarkEnabled="True"
-                     local:WatermarkBehavior.WatermarkText="Ana Are Mere"
                      Height="100"
                      HorizontalAlignment="Left"
-                     Margin="237,68,0,0"
+                     Margin="534,193,0,0"
                      Name="richTextBox1"
                      VerticalAlignment="Top"
-                     Width="200">
+                     Width="214">
             <local:WatermarkBehavior.WatermarkUIElement>
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="http://www.osa-opn.org/opn/media/Images/ImageOfTheWeek/12-10-22.jpg?width=1024&amp;height=1024&amp;ext=.jpg"></Image>
-                    <Image Source="http://www.osa-opn.org/opn/media/Images/ImageOfTheWeek/12-10-22.jpg?width=1024&amp;height=1024&amp;ext=.jpg"></Image>
+                    <Label Content="watermark"></Label>
+                    <Image Source="http://www.osa-opn.org/opn/media/Images/ImageOfTheWeek/12-10-22.jpg?width=1024&amp;height=1024&amp;ext=.jpg"
+                           Width="200"></Image>
                 </StackPanel>
             </local:WatermarkBehavior.WatermarkUIElement>
         </RichTextBox>
@@ -159,5 +159,12 @@
                Name="label4"
                VerticalAlignment="Top"
                Width="147" />
+        <Label Content="RichTextbox with image watermark:"
+               Height="28"
+               HorizontalAlignment="Left"
+               Margin="326,218,0,0"
+               Name="label5"
+               VerticalAlignment="Top"
+               Width="202" />
     </Grid>
 </Window>
