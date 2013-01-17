@@ -23,15 +23,15 @@
             </local:WatermarkBehaviour.WatermarkUIElement>
         </TextBox>-->
         <Button local:WatermarkBehavior.IsWatermarkEnabled="True"
-                local:WatermarkBehavior.WatermarkText="Ana Are Mere"
+                local:WatermarkBehavior.WatermarkText="Watermark"
                 local:WatermarkBehavior.WatermarkProperty="Content"
                 
                 Height="23"
                 HorizontalAlignment="Left"
-                Margin="78,164,0,0"
+                Margin="614,60,0,0"
                 Name="button1"
                 VerticalAlignment="Top"
-                Width="75" />
+                Width="120" />
         <PasswordBox local:WatermarkBehavior.IsWatermarkEnabled="True"
                      local:WatermarkBehavior.WatermarkText="Ana Are Mere"
                      Height="23"
@@ -83,7 +83,7 @@
                  local:WatermarkBehavior.WatermarkText="Watermark"
                  Background="Gold"
                  HorizontalAlignment="Left"
-                 Margin="498,323,0,0"
+                 Margin="614,24,0,0"
                  Name="textBox1"
                  VerticalAlignment="Top"
                  Width="120">
@@ -117,9 +117,47 @@
         <Label Content="Watermarked TextBox:"
                Height="28"
                HorizontalAlignment="Left"
-               Margin="358,321,0,0"
+               Margin="474,24,0,0"
                Name="label1"
                VerticalAlignment="Top"
                Width="134" />
+        <Label Content="Watermarked Button:"
+               Height="28"
+               HorizontalAlignment="Left"
+               Margin="483,60,0,0"
+               Name="label2"
+               VerticalAlignment="Top"
+               Width="125" />
+        <PasswordBox local:WatermarkBehavior.IsWatermarkEnabled="True"
+                     local:WatermarkBehavior.WatermarkText="Watermark"
+                     Background="Lavender"
+                     Height="23"
+                     HorizontalAlignment="Left"
+                     Margin="614,97,0,0"
+                     Name="passwordBox2"
+                     VerticalAlignment="Top"
+                     Width="120" />
+        <Label Content="Watermarked PasswordBox:"
+               Height="28"
+               HorizontalAlignment="Left"
+               Margin="451,97,0,0"
+               Name="label3"
+               VerticalAlignment="Top"
+               Width="157" />
+        <ComboBox local:WatermarkBehavior.IsWatermarkEnabled="True"
+                  local:WatermarkBehavior.WatermarkText="Watermark"
+                  Height="23"
+                  HorizontalAlignment="Left"
+                  Margin="614,135,0,0"
+                  Name="comboBox3"
+                  VerticalAlignment="Top"
+                  Width="120" />
+        <Label Content="Watermarked Combobox:"
+               Height="28"
+               HorizontalAlignment="Left"
+               Margin="461,135,0,0"
+               Name="label4"
+               VerticalAlignment="Top"
+               Width="147" />
     </Grid>
 </Window>

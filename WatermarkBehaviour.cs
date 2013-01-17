@@ -145,22 +145,22 @@
         /// <summary>
         /// Checks some default properties not empty or null for the control.
         /// </summary>
-        /// <param name="tb">The control that is verified</param>
+        /// <param name="control">The control that is verified</param>
         /// <returns>true if one property is found on the control and is empty or null; false otherwise</returns>
-        private static bool CheckDefaultPropertiesEmptyOrNull(Control tb)
+        private static bool CheckDefaultPropertiesEmptyOrNull(Control control)
         {
             // For Password
-            var passwordPropertyInfo = tb.GetType().GetProperty("Password");
-            if (passwordPropertyInfo != null && passwordPropertyInfo.GetValue(tb, null).ToString() == string.Empty)
+            var passwordPropertyInfo = control.GetType().GetProperty("Password");
+            if (passwordPropertyInfo != null && passwordPropertyInfo.GetValue(control, null).ToString() == string.Empty)
             {
                 return true;
             }
 
             // For rich textbox
-            var richTextBoxPropertyInfo = tb.GetType().GetProperty("Document");
+            var richTextBoxPropertyInfo = control.GetType().GetProperty("Document");
             if (richTextBoxPropertyInfo != null)
             {
-                var richTextBoxvalue = richTextBoxPropertyInfo.GetValue(tb, null) as FlowDocument;
+                var richTextBoxvalue = richTextBoxPropertyInfo.GetValue(control, null) as FlowDocument;
                 if (richTextBoxvalue != null)
                 {
                     var textRange = new TextRange(richTextBoxvalue.ContentStart, richTextBoxvalue.ContentEnd);
@@ -172,21 +172,16 @@
             }
 
             // For Selector
-            var comboboxPropertyInfo = tb.GetType().GetProperty("SelectedItem");
+            var comboboxPropertyInfo = control.GetType().GetProperty("SelectedItem");
 
-            if (comboboxPropertyInfo != null && comboboxPropertyInfo.GetValue(tb, null) == null)
+            if (comboboxPropertyInfo != null && comboboxPropertyInfo.GetValue(control, null) == null)
             {
                 return true;
             }
 
             // For textbox
-            var textPropertyInfo = tb.GetType().GetProperty("Text");
-            if (textPropertyInfo != null && textPropertyInfo.GetValue(tb, null).ToString() == string.Empty)
-            {
-                return true;
-            }
-
-            return false;
+            var textPropertyInfo = control.GetType().GetProperty("Text");
+            return textPropertyInfo != null && textPropertyInfo.GetValue(control, null).ToString() == string.Empty;
         }
 
         /// <summary>
@@ -212,24 +207,26 @@
         /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void OnIsWatermarkEnabled(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var tb = d as FrameworkElement;
-            if (tb != null)
+            var frameworkElement = d as FrameworkElement;
+            if (frameworkElement == null)
             {
-                var isEnabled = (bool)e.NewValue;
-                if (isEnabled)
-                {
-                    // hook to the events of the control
-                    tb.GotFocus += ControlGotFocus;
-                    tb.LostFocus += ControlLostFocus;
-                    tb.Loaded += ControlLoaded;
-                }
-                else
-                {
-                    // unhook to the events of the control
-                    tb.GotFocus -= ControlGotFocus;
-                    tb.LostFocus -= ControlLostFocus;
-                    tb.Loaded -= ControlLoaded;
-                }
+                return;
+            }
+
+            var isEnabled = (bool)e.NewValue;
+            if (isEnabled)
+            {
+                // hook to the events of the control
+                frameworkElement.GotFocus += ControlGotFocus;
+                frameworkElement.LostFocus += ControlLostFocus;
+                frameworkElement.Loaded += ControlLoaded;
+            }
+            else
+            {
+                // unhook to the events of the control
+                frameworkElement.GotFocus -= ControlGotFocus;
+                frameworkElement.LostFocus -= ControlLostFocus;
+                frameworkElement.Loaded -= ControlLoaded;
             }
         }
 
@@ -240,18 +237,19 @@
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private static void ControlGotFocus(object sender, RoutedEventArgs e)
         {
-            var tb = sender as Control;
-            string dependencyPropertyName = GetWatermarkProperty(tb);
-            if (tb != null)
+            var control = sender as Control;
+            var dependencyPropertyName = GetWatermarkProperty(control);
+            if (control == null)
             {
-                int hashCode = tb.GetHashCode();
-                ControlBackground controlBackground =
-                OriginalTextBoxBackgrounds.FirstOrDefault(cb => cb.Control.GetHashCode() == hashCode);
+                return;
+            }
 
-                if (string.IsNullOrWhiteSpace(dependencyPropertyName) && controlBackground != null)
-                {
-                    tb.Background = controlBackground.OriginalBackground;
-                }
+            var hashCode = control.GetHashCode();
+            var controlBackground = OriginalTextBoxBackgrounds.FirstOrDefault(cb => cb.Control.GetHashCode() == hashCode);
+
+            if (string.IsNullOrWhiteSpace(dependencyPropertyName) && controlBackground != null)
+            {
+                control.Background = controlBackground.OriginalBackground;
             }
         }
 
@@ -262,23 +260,25 @@
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private static void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            var tb = sender as Control;
-            if (tb != null)
+            var control = sender as Control;
+            if (control == null)
             {
-                // Save the original look of the control
-                var newControlBackground = new ControlBackground
-                                               {
-                                                   Control = tb,
-                                                   OriginalBackground = tb.Background
-                                               };
-                CreateWatermark(newControlBackground);
-                OriginalTextBoxBackgrounds.Add(newControlBackground);
-                var stringProperty = GetWatermarkProperty(tb);
-                var propertyIsEmpty = string.IsNullOrWhiteSpace(stringProperty) ? CheckDefaultPropertiesEmptyOrNull(tb) : PropertyIsEmpty(tb, stringProperty);
-                if (propertyIsEmpty)
-                {
-                    ApplyWatermark(tb, newControlBackground.WatermarkLabel);  
-                }
+                return;
+            }
+
+            // Save the original look of the control
+            var newControlBackground = new ControlBackground
+                                           {
+                                               Control = control,
+                                               OriginalBackground = control.Background
+                                           };
+            CreateWatermark(newControlBackground);
+            OriginalTextBoxBackgrounds.Add(newControlBackground);
+            var stringProperty = GetWatermarkProperty(control);
+            var propertyIsEmpty = string.IsNullOrWhiteSpace(stringProperty) ? CheckDefaultPropertiesEmptyOrNull(control) : PropertyIsEmpty(control, stringProperty);
+            if (propertyIsEmpty)
+            {
+                ApplyWatermark(control, newControlBackground.WatermarkLabel);  
             }
         }
 
@@ -289,15 +289,14 @@
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private static void ControlLostFocus(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine("entered tb_LostFocus ");
-            var tb = sender as Control;
-            if (tb == null)
+            var control = sender as Control;
+            if (control == null)
             {
                 return;
             }
 
-            var stringProperty = GetWatermarkProperty(tb);
-            var propertyIsEmpty = string.IsNullOrWhiteSpace(stringProperty) ? CheckDefaultPropertiesEmptyOrNull(tb) : PropertyIsEmpty(tb, stringProperty);
+            var stringProperty = GetWatermarkProperty(control);
+            var propertyIsEmpty = string.IsNullOrWhiteSpace(stringProperty) ? CheckDefaultPropertiesEmptyOrNull(control) : PropertyIsEmpty(control, stringProperty);
 
             if (!propertyIsEmpty)
             {
@@ -305,10 +304,10 @@
             }
 
             var controlBackground =
-                OriginalTextBoxBackgrounds.FirstOrDefault(cb => cb.Control.GetHashCode() == tb.GetHashCode());
+                OriginalTextBoxBackgrounds.FirstOrDefault(cb => cb.Control.GetHashCode() == control.GetHashCode());
             if (controlBackground != null && controlBackground.WatermarkLabel != null)
             {
-                ApplyWatermark(tb, controlBackground.WatermarkLabel);
+                ApplyWatermark(control, controlBackground.WatermarkLabel);
             }
         }
 
